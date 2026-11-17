@@ -1,0 +1,131 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap");
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * AmparoCA design tokens
+ * Light: #6B1F33 · #F6E4A6 · #F1EEED
+ * Dark:  #33131D · #262626 · #F1EEED
+ * Typography: Google Sans Regular (400)
+ */
+:root {
+  --font-google-sans: "Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --background: #f1eeed;
+  --foreground: #1c1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
+  --primary: #6b1f33;
+  --primary-foreground: #f1eeed;
+  --secondary: #f6e4a6;
+  --secondary-foreground: #33131d;
+  --muted: #e7e2e0;
+  --muted-foreground: #57534e;
+  --accent: #f6e4a6;
+  --accent-foreground: #6b1f33;
+  --destructive: #dc2626;
+  --border: #dfd8d5;
+  --input: #d6cecb;
+  --ring: #6b1f33;
+
+  /* Semantic status colors */
+  --success: #059669;
+  --success-foreground: #ffffff;
+  --success-soft: #ecfdf5;
+  --warning: #b45309;
+  --warning-soft: #f6e4a6;
+  --danger-soft: #fef2f2;
+  --info-soft: #f6e4a6;
+
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: #262626;
+  --foreground: #f1eeed;
+  --card: #33131d;
+  --card-foreground: #f1eeed;
+  --popover: #33131d;
+  --popover-foreground: #f1eeed;
+  --primary: #f6e4a6;
+  --primary-foreground: #33131d;
+  --secondary: #262626;
+  --secondary-foreground: #f1eeed;
+  --muted: #2e2e2e;
+  --muted-foreground: #d6cecb;
+  --accent: #471c29;
+  --accent-foreground: #f6e4a6;
+  --destructive: #f87171;
+  --border: #4a2330;
+  --input: #5c2e3d;
+  --ring: #f6e4a6;
+
+  --success: #34d399;
+  --success-foreground: #022c22;
+  --success-soft: rgb(52 211 153 / 0.12);
+  --warning: #fbbf24;
+  --warning-soft: rgb(246 228 166 / 0.12);
+  --danger-soft: rgb(248 113 113 / 0.12);
+  --info-soft: rgb(246 228 166 / 0.12);
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: var(--font-google-sans);
+  --font-heading: var(--font-google-sans);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger-soft: var(--danger-soft);
+  --color-info-soft: var(--info-soft);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    font-family: var(--font-google-sans);
+    @apply font-sans antialiased;
+  }
+  body {
+    font-family: var(--font-google-sans);
+    @apply bg-background text-foreground;
+  }
+}
