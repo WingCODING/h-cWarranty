@@ -14,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { AI_SUMMARY } from "@/lib/case-data";
+import { AI_SUMMARY, type SummaryItem } from "@/lib/case-data";
 
 export type Decision = "pending" | "approved" | "denied";
 
@@ -26,12 +26,18 @@ const ICONS = {
 } as const;
 
 type ReviewDeskProps = {
+  summary?: SummaryItem[];
   decision: Decision;
   onApprove: () => void;
   onDeny: () => void;
 };
 
-export function ReviewDesk({ decision, onApprove, onDeny }: ReviewDeskProps) {
+export function ReviewDesk({
+  summary = AI_SUMMARY,
+  decision,
+  onApprove,
+  onDeny,
+}: ReviewDeskProps) {
   return (
     <Card>
       <CardHeader className="border-b">
@@ -53,7 +59,7 @@ export function ReviewDesk({ decision, onApprove, onDeny }: ReviewDeskProps) {
         </p>
 
         <dl className="grid gap-3 sm:grid-cols-2">
-          {AI_SUMMARY.map((item, index) => {
+          {summary.map((item, index) => {
             const Icon = ICONS[item.key];
             return (
               <motion.div

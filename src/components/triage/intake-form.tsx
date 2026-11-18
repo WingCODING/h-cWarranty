@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CheckCircle2, FileText, Sparkles, Upload } from "lucide-react";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 
+import { AnalysisProgress, ANALYSIS_DURATION_MS } from "@/components/triage/analysis-progress";
 import { Spinner } from "@/components/ui/spinner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,25 +26,47 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { MAX_PAGES, NOC_OPTIONS, initialCase } from "@/lib/case-data";
+import {
+  MAX_PAGES,
+  NOC_OPTIONS,
+  initialCase,
+  type DossierCase,
+} from "@/lib/case-data";
 
 type IntakeFormProps = {
+  dossier?: DossierCase;
   onSubmitted: () => void;
 };
 
-export function IntakeForm({ onSubmitted }: IntakeFormProps) {
-  const [noc, setNoc] = useState<string>(initialCase.noc);
+export function IntakeForm({
+  dossier = initialCase,
+  onSubmitted,
+}: IntakeFormProps) {
+  const [noc, setNoc] = useState<string>(dossier.noc);
   const [isRunning, setIsRunning] = useState(false);
-  const { file } = initialCase;
+  const runTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setNoc(dossier.noc);
+  }, [dossier]);
+
+  useEffect(() => {
+    return () => {
+      if (runTimerRef.current) clearTimeout(runTimerRef.current);
+    };
+  }, []);
+
+  const { file } = dossier;
   const usage = Math.round((file.pages / MAX_PAGES) * 100);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (isRunning) return;
     setIsRunning(true);
-    setTimeout(() => {
+    runTimerRef.current = setTimeout(() => {
       setIsRunning(false);
       onSubmitted();
-    }, 1200);
+    }, ANALYSIS_DURATION_MS);
   }
 
   return (
@@ -55,14 +78,14 @@ export function IntakeForm({ onSubmitted }: IntakeFormProps) {
         </CardDescription>
       </CardHeader>
 
-      <form onSubmit={handleSubmit} className="contents">
+      <form key={dossier.id} onSubmit={handleSubmit} className="contents">
         <CardContent className="space-y-6">
           <FieldGroup className="grid gap-4 sm:grid-cols-2">
             <Field>
               <FieldLabel htmlFor="ircc">Número da Aplicação IRCC</FieldLabel>
               <Input
                 id="ircc"
-                defaultValue={initialCase.irccNumber}
+                defaultValue={dossier.irccNumber}
                 className="h-10 transition-colors"
               />
             </Field>
@@ -70,7 +93,7 @@ export function IntakeForm({ onSubmitted }: IntakeFormProps) {
               <FieldLabel htmlFor="name">Nome do Imigrante</FieldLabel>
               <Input
                 id="name"
-                defaultValue={initialCase.applicantName}
+                defaultValue={dossier.applicantName}
                 className="h-10 transition-colors"
               />
             </Field>
@@ -99,7 +122,7 @@ export function IntakeForm({ onSubmitted }: IntakeFormProps) {
                 id="dependents"
                 type="number"
                 min={0}
-                defaultValue={initialCase.dependents}
+                defaultValue={dossier.dependents}
                 className="h-10 transition-colors"
               />
             </Field>
@@ -158,6 +181,10 @@ export function IntakeForm({ onSubmitted }: IntakeFormProps) {
               />
             </motion.div>
           </div>
+
+          <AnimatePresence initial={false}>
+            {isRunning && <AnalysisProgress key="analysis-progress" />}
+          </AnimatePresence>
         </CardContent>
 
         <CardFooter className="justify-end bg-transparent">

@@ -1,14 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import url("https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
 /*
- * AmparoCA design tokens
+ * H&C Warranty design tokens
  * Light: #6B1F33 · #F6E4A6 · #F1EEED
  * Dark:  #33131D · #262626 · #F1EEED
+ * Status: Azul (#1E3A8A / #2563EB) e Vermelho da paleta (#6B1F33)
  * Typography: Google Sans Regular (400)
  */
 :root {
@@ -28,18 +28,18 @@
   --muted-foreground: #57534e;
   --accent: #f6e4a6;
   --accent-foreground: #6b1f33;
-  --destructive: #dc2626;
+  --destructive: #6b1f33;
   --border: #dfd8d5;
   --input: #d6cecb;
   --ring: #6b1f33;
 
-  /* Semantic status colors */
-  --success: #059669;
+  /* Semantic status colors: Azul no lugar do verde e Vermelho da paleta (#6B1F33) */
+  --success: #1e3a8a;
   --success-foreground: #ffffff;
-  --success-soft: #ecfdf5;
+  --success-soft: #dbeafe;
   --warning: #b45309;
   --warning-soft: #f6e4a6;
-  --danger-soft: #fef2f2;
+  --danger-soft: rgb(107 31 51 / 0.12);
   --info-soft: #f6e4a6;
 
   --radius: 0.75rem;
@@ -60,17 +60,17 @@
   --muted-foreground: #d6cecb;
   --accent: #471c29;
   --accent-foreground: #f6e4a6;
-  --destructive: #f87171;
+  --destructive: #d45d79;
   --border: #4a2330;
   --input: #5c2e3d;
   --ring: #f6e4a6;
 
-  --success: #34d399;
-  --success-foreground: #022c22;
-  --success-soft: rgb(52 211 153 / 0.12);
+  --success: #3b82f6;
+  --success-foreground: #ffffff;
+  --success-soft: rgb(59 130 246 / 0.18);
   --warning: #fbbf24;
   --warning-soft: rgb(246 228 166 / 0.12);
-  --danger-soft: rgb(248 113 113 / 0.12);
+  --danger-soft: rgb(107 31 51 / 0.45);
   --info-soft: rgb(246 228 166 / 0.12);
 
   color-scheme: dark;
@@ -120,10 +120,12 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   html {
     font-family: var(--font-google-sans);
     @apply font-sans antialiased;
   }
+
   body {
     font-family: var(--font-google-sans);
     @apply bg-background text-foreground;

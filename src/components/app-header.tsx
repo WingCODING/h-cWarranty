@@ -9,7 +9,7 @@ export function AppHeader() {
         <div className="flex items-center gap-3">
           <div className="flex items-center justify-center overflow-hidden rounded-lg bg-[#f1eeed] p-1 shadow-2xs ring-1 ring-border">
             <img
-              src="/img/Canada.jpg"
+              src="/img/Canada.svg"
               alt="Canadá"
               className="h-7 w-auto rounded-xs object-contain"
             />
